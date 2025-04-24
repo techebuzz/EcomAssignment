@@ -131,7 +131,6 @@ CREATE TABLE  product_item (
     FOREIGN KEY (variation_id) REFERENCES product_variation(variation_id)
 );
 
--- Insert sample data for testing
 -- Insert brands
 INSERT INTO brand (brand_name, description) VALUES
 ('Nike', 'Just Do It'),
@@ -208,7 +207,7 @@ INSERT INTO product_image (product_id, image_url, is_primary) VALUES
 (1, 'https://example.com/nike-air-max-blue.jpg', FALSE),
 (2, 'https://example.com/adidas-tshirt-black.jpg', TRUE),
 (2, 'https://example.com/adidas-tshirt-white.jpg', FALSE);
--- 1. Get all products with their brand and category information
+--  Get all products with their brand and category information
 SELECT 
     p.product_name,
     b.brand_name,
@@ -219,7 +218,7 @@ FROM
     LEFT JOIN brand b ON p.brand_id = b.brand_id
     LEFT JOIN product_category pc ON p.category_id = pc.category_id;
 
--- 2. Get all product variations with their color and size information
+--  Get all product variations with their color and size information
 SELECT 
     p.product_name,
     c.color_name,
@@ -233,7 +232,7 @@ FROM
     LEFT JOIN color c ON pv.color_id = c.color_id
     LEFT JOIN size_option so ON pv.size_id = so.size_id;
 
--- 3. Get all products with their primary images
+-- Get all products with their primary images
 SELECT 
     p.product_name,
     pi.image_url
@@ -243,7 +242,7 @@ FROM
 WHERE 
     pi.is_primary = TRUE;
 
--- 4. Get all products with their attributes
+-- Get all products with their attributes
 SELECT 
     p.product_name,
     ac.category_name as attribute_category,
@@ -256,7 +255,7 @@ FROM
     JOIN attribute_category ac ON pa.attribute_category_id = ac.attribute_category_id
     JOIN attribute_type at ON pa.type_id = at.type_id;
 
--- 5. Get all products with low stock (less than 10 items)
+-- Get all products with low stock (less than 10 items)
 SELECT 
     p.product_name,
     pv.sku,
@@ -267,7 +266,7 @@ FROM
 WHERE 
     pv.stock_quantity < 10;
 
--- 6. Get all products by brand with their total variations
+--  Get all products by brand with their total variations
 SELECT 
     b.brand_name,
     COUNT(DISTINCT p.product_id) as total_products,
@@ -279,7 +278,7 @@ FROM
 GROUP BY 
     b.brand_id, b.brand_name;
 
--- 7. Get all products with their complete information
+-- Get all products with their complete information
 SELECT 
     p.product_name,
     b.brand_name,
@@ -299,7 +298,7 @@ FROM
 GROUP BY 
     p.product_id, p.product_name, b.brand_name, pc.category_name, p.base_price;
 
--- 8. Get all products with their attributes and values
+-- Get all products with their attributes and values
 SELECT 
     p.product_name,
     GROUP_CONCAT(
@@ -312,7 +311,7 @@ FROM
 GROUP BY 
     p.product_id, p.product_name;
 
--- 9. Get all products with their images
+-- Get all products with their images
 SELECT 
     p.product_name,
     GROUP_CONCAT(
@@ -325,7 +324,7 @@ FROM
 GROUP BY 
     p.product_id, p.product_name;
 
--- 10. Get all products with their complete pricing information
+-- Get all products with their complete pricing information
 SELECT 
     p.product_name,
     p.base_price,
